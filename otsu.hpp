@@ -47,11 +47,15 @@
 
 namespace keymolen {
 class Otsu {
+   public:
+    static const int HISTOGRAM_W = 550;
+    static const int HISTOGRAM_H = 300;
 
    public:
     Otsu(int w, int h);
     virtual ~Otsu();
-    unsigned char* Threshold(const unsigned char* src, unsigned char* histogram, unsigned char* result);
+    unsigned char* Threshold(const unsigned char* src, unsigned char* histogram,
+                             unsigned char* result);
 
    private:
     int w_;

@@ -134,7 +134,7 @@ void doTransform(std::string file_path) {
     int w = img_gray.cols;
     int h = img_ori.rows;
 
-    cv::Mat img_histogram(h, w, CV_8UC1, cv::Scalar::all(0));
+    cv::Mat img_histogram(keymolen::Otsu::HISTOGRAM_H, keymolen::Otsu::HISTOGRAM_W, CV_8UC1, cv::Scalar::all(0));
     cv::Mat img_result(h, w, CV_8UC1, cv::Scalar::all(0));
 
 

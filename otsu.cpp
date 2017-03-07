@@ -53,26 +53,22 @@
 
 namespace keymolen {
 
+Otsu::Otsu(int w, int h) : w_(w), h_(h), size_(w * h) {}
 
-Otsu::Otsu(int w, int h) : w_(w), h_(h), size_(w * h) {
+Otsu::~Otsu() {}
 
-}
-
-Otsu::~Otsu() {
-}
-
-void DrawBox(unsigned char *dst, int w, int x1, int y1, int x2, int y2, unsigned char color)
-{
-    for (int x=x1; x<x2; x++) {
-        for (int y=y1; y<y2; y++) {
+void DrawBox(unsigned char* dst, int w, int x1, int y1, int x2, int y2,
+             unsigned char color) {
+    for (int x = x1; x < x2; x++) {
+        for (int y = y1; y < y2; y++) {
             int pos = x + (y * w);
-            dst[pos] = color; 
+            dst[pos] = color;
         }
     }
 }
-    
-unsigned char* Otsu::Threshold(const unsigned char* src, unsigned char* hist, unsigned char* result)
-{
+
+unsigned char* Otsu::Threshold(const unsigned char* src, unsigned char* hist,
+                               unsigned char* result) {
     memset(histogram_, 0, 255 * sizeof(int));
 
     for (int x = 0; x < w_; x++) {
@@ -83,20 +79,38 @@ unsigned char* Otsu::Threshold(const unsigned char* src, unsigned char* hist, un
     }
 
     int max = 0;
-    for (int z=0; z<255; z++) {
+    for (int z = 0; z < 255; z++) {
         if (histogram_[z] > max) {
             max = histogram_[z];
         }
     }
 
-    double scale = (double)(h_ - 10) / (double)max;
-    double bw = (w_ - 10) / 255;
-
+    //Draw histogram
+    double scale = (double)(HISTOGRAM_H - 10) / (double)max;
+    double bw = (HISTOGRAM_W - 10) / 255;
     std::cout << "max: " << max << ", scale: " << scale << std::endl;
-    for (int z=0; z<255; z++)
-    {
-        DrawBox(hist, w_, z*bw, h_-5-(int)(histogram_[z] * scale), (z*bw)+bw, h_-5, 200);
+    for (int z = 0; z < 255; z++) {
+        DrawBox(hist, HISTOGRAM_W, 
+                (z * bw) + 10, HISTOGRAM_H - 5 - (int)(histogram_[z] * scale), 
+                (z * bw) + bw + 10, HISTOGRAM_H - 5, 
+                200);
     }
+
+    
+    for (int x = 0; x < w_; x++) {
+        for (int y = 0; y < h_; y++) {
+            int pos = x + (y * w_);
+            if (src[pos] > 120) 
+            {
+                result[pos] = 0;
+            }
+            else
+            {
+                result[pos] = src[pos];//255;
+            }
+        }
+    }
+
 
     return hist;
 }
