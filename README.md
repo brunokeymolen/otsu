@@ -8,6 +8,8 @@ Otsu thresholding in C++
 <br>
 <a href="http://www.labbookpages.co.uk/software/imgProc/otsuThreshold.html">http://www.labbookpages.co.uk/software/imgProc/otsuThreshold.html</a>
 
-<img src="results/valve_original.png" width="550">
+<img src="results/result.png" width="550">
+<br>
+<img src="results/histogram.png" width="550">
 
 (C)Bruno Keymolen, bruno.keymolen@gmail.com

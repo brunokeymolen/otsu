@@ -76,11 +76,8 @@ void usage(char* s) {
             "[-? help]",
             s);
     fprintf(stderr, "   s: path image file\n");
-    fprintf(stderr, "   l: canny low threshold\n");
-    fprintf(stderr, "   h: canny high threshold\n");
     fprintf(stderr,
-            "\nexample:  ./canny -s img/Valve_original.PNG "
-            "-l 30 -h 90\n");
+            "\nexample:  ./otsu -s img/harewood.jpg");
     fprintf(stderr, "\n");
 }
 
@@ -150,39 +147,13 @@ void doTransform(std::string file_path) {
         cv::imshow(CW_IMG_HISTOGRAM, img_histogram);
         cv::imshow(CW_IMG_RESULT, img_result);
 
+       
         char c = cv::waitKey(360000);
-#if 0
-        if (c == 'h') {
-            if (high_threshold > 10)
-                high_threshold -= 5;
-            else
-                high_threshold -= 1;
-        }
-        if (c == 'H') {
-            if (high_threshold >= 10)
-                high_threshold += 5;
-            else
-                high_threshold += 1;
-        }
-        if (c == 'l') {
-            if (low_threshold > 10)
-                low_threshold -= 5;
-            else
-                low_threshold -= 1;
-        }
-        if (c == 'L') {
-            if (low_threshold >= 10)
-                low_threshold += 5;
-            else
-                low_threshold += 1;
-        }
-        if (c == '3') filter = keymolen::Canny::NoiseFilter::Gaus3x3;
-        if (c == '5') filter = keymolen::Canny::NoiseFilter::Gaus5x5;
+        
         if (c == 's') {
-            cv::imwrite("canny.png", img_edge);
-            std::cout << "write canny.png done..." << std::endl;
+            cv::imwrite("result.png", img_result);
+            cv::imwrite("histogram.png", img_histogram);
         }
-#endif
 
 
         if (c == 27) break;
